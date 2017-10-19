@@ -106,7 +106,10 @@ def sync_customizations_for_doctype(data):
 		for d in data[key]:
 			d['doctype'] = custom_doctype
 			doc = frappe.get_doc(d)
-			doc.db_insert()
+			try:
+				doc.db_insert()
+			except:
+				pass
 
 	if data['custom_fields']:
 		sync('custom_fields', 'Custom Field', 'dt')
