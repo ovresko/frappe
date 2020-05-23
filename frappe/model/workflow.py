@@ -94,6 +94,8 @@ def apply_workflow(doc, action):
 		doc.save()
 	elif doc.docstatus == 1 and new_docstatus == 2:
 		doc.cancel()
+	elif doc.docstatus == 1 and new_docstatus == 0:
+		doc.save()
 	else:
 		frappe.throw(_('Illegal Document Status for {0}').format(next_state.state))
 

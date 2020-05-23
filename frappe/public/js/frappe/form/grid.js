@@ -72,7 +72,7 @@ export default class Grid {
 									${__("Add Row")}</button>
 							</div>
 							<div class="col-sm-6 text-right">
-								<a href="#" class="grid-download btn btn-xs btn-default hide"
+								<a href="#" class="grid-download btn btn-xs btn-default"
 									style="margin-left: 10px;">
 									${__("Download")}</a>
 								<a href="#" class="grid-upload btn btn-xs btn-default hide"
@@ -282,7 +282,7 @@ export default class Grid {
 			}
 
 		} else {
-			this.wrapper.find(".grid-footer").toggle(false);
+			//this.wrapper.find(".grid-footer").toggle(false);
 		}
 
 	}
@@ -627,11 +627,14 @@ export default class Grid {
 					function(data) {
 						var data = frappe.utils.csv_to_array(frappe.upload.get_string(data.upload_file));
 						// row #2 contains fieldnames;
-						var fieldnames = data[2];
+						var fieldnames = data[1];
+						//console.log(data);
 
 						me.frm.clear_table(me.df.fieldname);
+						//var tbl = me.df.grid;
+						//console.log(tbl);
 						$.each(data, function(i, row) {
-							if(i > 6) {
+							if(i > 1) { // 6
 								var blank_row = true;
 								$.each(row, function(ci, value) {
 									if(value) {
@@ -642,9 +645,17 @@ export default class Grid {
 
 								if(!blank_row) {
 									var d = me.frm.add_child(me.df.fieldname);
+								//	console.log("d: "+d.name);
+								//	console.log(d);
+									//var row_name = tbl[i-1]
 									$.each(row, function(ci, value) {
 										var fieldname = fieldnames[ci];
 										var df = frappe.meta.get_docfield(me.df.options, fieldname);
+										if(!df)
+										{
+										console.log("no df");
+											return ;
+										}
 
 										// convert date formatting
 										if(df.fieldtype==="Date" && value) {
@@ -654,8 +665,17 @@ export default class Grid {
 										if(df.fieldtype==="Int" || df.fieldtype==="Check") {
 											value = cint(value);
 										}
+										if(df.fieldtype==="Float" && value){
+value = parseFloat(value.toString().replace(',','.'));
+}
+										//if(fieldnames[ci]=="item_code"){
+											
+//console.log("item_code : "+value);
+//frappe.model.set_value(d.doctype,d.name,"item_code",value);
+										//}else{
 
 										d[fieldnames[ci]] = value;
+									//	}
 									});
 								}
 							}
@@ -675,23 +695,23 @@ export default class Grid {
 		$(this.wrapper).find(".grid-download").removeClass("hide").on("click", function() {
 			var data = [];
 			var docfields = [];
-			data.push([__("Bulk Edit {0}", [title])]);
+		//	data.push([__("Bulk Edit {0}", [title])]);
 			data.push([]);
 			data.push([]);
-			data.push([]);
-			data.push([__("The CSV format is case sensitive")]);
-			data.push([__("Do not edit headers which are preset in the template")]);
-			data.push(["------"]);
+		//	data.push([]);
+		//	data.push([__("The CSV format is case sensitive")]);
+		//	data.push([__("Do not edit headers which are preset in the template")]);
+			//data.push(["------"]);
 			$.each(frappe.get_meta(me.df.options).fields, function(i, df) {
 				// don't include the read-only field in the template
 				if(frappe.model.is_value_type(df.fieldtype)) {
-					data[1].push(df.label);
-					data[2].push(df.fieldname);
+					data[0].push(__(df.label));
+					data[1].push(df.fieldname);
 					let description = (df.description || "") + ' ';
 					if (df.fieldtype === "Date") {
 						description += frappe.boot.sysdefaults.date_format;
 					}
-					data[3].push(description);
+					//data[3].push(description);
 					docfields.push(df);
 				}
 			});
@@ -699,7 +719,7 @@ export default class Grid {
 			// add data
 			$.each(me.frm.doc[me.df.fieldname] || [], function(i, d) {
 				var row = [];
-				$.each(data[2], function(i, fieldname) {
+				$.each(data[1], function(i, fieldname) {
 					var value = d[fieldname];
 
 					// format date

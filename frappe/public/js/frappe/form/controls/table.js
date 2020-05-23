@@ -35,9 +35,9 @@ frappe.ui.form.ControlTable = frappe.ui.form.Control.extend({
 			if (!pastedData) return;
 			var data = frappe.utils.csv_to_array(pastedData,'\t');
 			if (data.length === 1 & data[0].length === 1) return;
-			if (data.length > 100){
-				data = data.slice(0, 100);
-				frappe.msgprint('for performance, only the first 100 rows processed!');
+			if (data.length > 1000){
+				data = data.slice(0, 1000);
+				frappe.msgprint('for performance, only the first 1000 rows processed!');
 			}
 			var fieldnames = [];
 			var get_field = function(name_or_label){
@@ -64,9 +64,12 @@ frappe.ui.form.ControlTable = frappe.ui.form.Control.extend({
 					find && fieldnames.push(column.fieldname);
 				})
 			}
+			console.log("START FETH");
 			$.each(data, function(i, row) {
 				var blank_row = true;
+				console.log("row : "+i);
 				$.each(row, function(ci, value) {
+					console.log("col : "+value);
 					if(value) {
 						blank_row = false;
 						return false;
@@ -80,7 +83,9 @@ frappe.ui.form.ControlTable = frappe.ui.form.Control.extend({
 					row_idx ++;
 					var row_name = cur_row.doc.name;
 					$.each(row, function(ci, value) {
-						if (fieldnames[ci]) frappe.model.set_value(cur_doctype, row_name, fieldnames[ci], value);
+						console.log("put: "+i);
+						if (fieldnames[ci])
+							frappe.model.set_value(cur_doctype, row_name, fieldnames[ci], value);
 					});
 					frappe.show_progress(__('Processing'), i, data.length);
 				}

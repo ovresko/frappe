@@ -133,7 +133,7 @@ function format_currency(v, currency, decimals) {
 	}
 
 	if (symbol)
-		return symbol + " " + format_number(v, format, decimals);
+		return format_number(v, format, decimals) + " " + symbol;
 	else
 		return format_number(v, format, decimals);
 }

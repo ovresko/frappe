@@ -549,7 +549,7 @@ def money_in_words(number, main_currency = None, fraction_currency=None):
 	elif main == '0':
 		out = _(in_words(fraction, in_million).title()) + ' ' + fraction_currency
 	else:
-		out = main_currency + ' ' + _(in_words(main, in_million).title())
+		out = _(in_words(main, in_million).title()) + ' ' + main_currency
 		if cint(fraction):
 			out = out + ' ' + _('and') + ' ' + _(in_words(fraction, in_million).title()) + ' ' + fraction_currency
 

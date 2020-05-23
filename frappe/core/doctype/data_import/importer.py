@@ -42,15 +42,18 @@ def upload(rows = None, submit_after_import=None, ignore_encoding_errors=False, 
 	if user:
 		frappe.cache().hdel("lang", user)
 		frappe.set_user_lang(user)
-
+	#frappe.msgprint(data_import_doc.overwrite)
 	if data_import_doc and isinstance(data_import_doc, string_types):
 		data_import_doc = frappe.get_doc("Data Import", data_import_doc)
+		#frappe.msgprint("found in database")
+		#frappe.msgprint(data_import_doc.overwrite)
 	if data_import_doc and from_data_import == "Yes":
 		no_email = data_import_doc.no_email
 		ignore_encoding_errors = data_import_doc.ignore_encoding_errors
 		update_only = data_import_doc.only_update
 		submit_after_import = data_import_doc.submit_after_import
 		overwrite = data_import_doc.overwrite
+		#frappe.msgprint("overwrite %s" % overwrite)
 		skip_errors = data_import_doc.skip_errors
 	else:
 		# extra input params
@@ -193,7 +196,7 @@ def upload(rows = None, submit_after_import=None, ignore_encoding_errors=False, 
 								doc.setdefault(d['parentfield'], []).append(d)
 				else:
 					break
-
+			#frappe.msgprint(doc)
 			return doc, attachments, last_error_row_idx
 		else:
 			doc = frappe._dict(zip(columns, rows[start_idx][1:]))
@@ -279,7 +282,8 @@ def upload(rows = None, submit_after_import=None, ignore_encoding_errors=False, 
 		if file_extension == '.xlsx' and from_data_import == 'Yes':
 			from frappe.utils.xlsxutils import read_xlsx_file_from_attached_file
 			rows = read_xlsx_file_from_attached_file(file_id=data_import_doc.import_file)
-
+			#frappe.msgprint("%d" % len(rows))
+			#frappe.msgprint(rows)
 		elif file_extension == '.csv':
 			from frappe.utils.csvutils import read_csv_content
 			rows = read_csv_content(fcontent, ignore_encoding_errors)
@@ -335,6 +339,7 @@ def upload(rows = None, submit_after_import=None, ignore_encoding_errors=False, 
 		parentfield = get_parent_field(doctype, parenttype)
 
 		if overwrite:
+			frappe.msgprint("still overwrtie")
 			delete_child_rows(data, doctype)
 
 	import_log = []
@@ -368,11 +373,15 @@ def upload(rows = None, submit_after_import=None, ignore_encoding_errors=False, 
 			# bypass empty rows
 			if main_doc_empty(row):
 				continue
-
+			#frappe.msgprint("in batch %s" % overwrite)
+			#frappe.msgprint("docName %s" % doc.get("name"))
+			#frappe.msgprint("exist db %s" % frappe.db.exists(doctype,doc["name"]))
 			row_idx = i + start_row
 			doc = None
 
 			publish_progress(i)
+			
+			#frappe.msgprint("in batch %s" % doc)
 
 			try:
 				doc, attachments, last_error_row_idx = get_doc(row_idx)
@@ -388,14 +397,19 @@ def upload(rows = None, submit_after_import=None, ignore_encoding_errors=False, 
 				else:
 					if overwrite and doc.get("name") and frappe.db.exists(doctype, doc["name"]):
 						original = frappe.get_doc(doctype, doc["name"])
+						#frappe.msgprint("overwite %s" % original.name)
 						original_name = original.name
+						#frappe.msgprint(original)
+						#frappe.msgprint(doc)
 						original.update(doc)
+						#frappe.msgprint(original)
 						# preserve original name for case sensitivity
 						original.name = original_name
 						original.flags.ignore_links = ignore_links
 						original.save()
 						doc = original
 					else:
+						frappe.msgprint("not overwrite")
 						if not update_only:
 							doc = frappe.get_doc(doc)
 							prepare_for_insert(doc)

@@ -1,11 +1,11 @@
 {
  "creation": "2017-08-17 02:16:58.060374", 
- "css": ".print-heading {\n\ttext-align: right;\n\ttext-transform: uppercase;\n\tcolor: #666;\n\tpadding-bottom: 20px;\n\tmargin-bottom: 20px;\n\tborder-bottom: 1px solid #d1d8dd;\n}\n\n.print-heading h2 {\n\tfont-size: 24px;\n}\n\n.print-format th {\n\tbackground-color: #eee !important;\n\tborder-bottom: 0px !important;\n}\n\n/* modern format: for-test */", 
+ "css": "//table th.table-sr { display: none; }\ntable th.table-sr { width:20px !important;max-width:20px !important; }\n\n.print-heading {\n\ttext-align: right;\n\ttext-transform: uppercase;\n\tcolor: #666;\n\tpadding-bottom: 20px;\n\tmargin-bottom: 20px;\n\tborder-bottom: 0px solid #d1d8dd;\n}\n\n.print-heading h2 {\n\tfont-size: 24px;\n}\n\n.print-format th {\n\tbackground-color: #eee !important;\n\tborder-bottom: 0px !important;\n}\n.table-bordered > tbody > tr > td, .table-bordered  {\n   // border: 1px solid #ffffff;\nborder-color:#000000;\nborder-style: dotted;\n}\n.table-bordered > thead > tr > th{\n    border: 1px solid #000000;\n}\n/* modern format: for-test */", 
  "disabled": 0, 
  "docstatus": 0, 
  "doctype": "Print Style", 
  "idx": 0, 
- "modified": "2017-08-18 00:44:07.438147", 
+ "modified": "2020-01-19 12:44:56.636957", 
  "modified_by": "Administrator", 
  "name": "Modern", 
  "owner": "Administrator", 
