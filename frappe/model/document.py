@@ -282,6 +282,11 @@ class Document(BaseDocument):
 		if self.get("__islocal") or not self.get("name"):
 			self.insert()
 			return
+		if hasattr(self,'_bypass_modified') and self.get("name"):
+			_exists = frappe.db.exists(self.doctype,self.get("name"))
+			if not _exists:
+				self.insert()
+				return
 
 		self.check_permission("write", "save")
 
