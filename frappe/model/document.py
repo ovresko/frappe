@@ -417,7 +417,7 @@ class Document(BaseDocument):
 			del frappe.db.value_cache[self.doctype]
 
 	def set_user_and_timestamp(self):
-		if not self._original_modified or not self.modified:
+		if not hasattr(self,'_original_modified') or not self._original_modified or not self.modified:
 			self._original_modified = self.modified
 			self.modified = now()
 		self.modified_by = frappe.session.user
