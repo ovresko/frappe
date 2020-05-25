@@ -629,7 +629,7 @@ class Document(BaseDocument):
 
 				modified = cstr(tmp.modified)
 
-				if modified and modified != cstr(self._original_modified) and not hasattr(self, "_bypass_modified")::
+				if modified and modified != cstr(self._original_modified) and not hasattr(self, "_bypass_modified"):
 					conflict = True
 
 				self.check_docstatus_transition(tmp.docstatus)
