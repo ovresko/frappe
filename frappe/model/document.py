@@ -283,7 +283,7 @@ class Document(BaseDocument):
 			self.insert()
 			return
 		if hasattr(self,'_bypass_modified') and self.get("name"):
-			_exists = frappe.db.exists(self.doctype,self.get("name"))
+			_exists = frappe.db.exists(self.get("doctype"),self.get("name"))
 			if not _exists:
 				self.insert()
 				return
