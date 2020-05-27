@@ -406,7 +406,9 @@ frappe.upload = {
 		var dec = atob(a);
 		dec = frappe.upload.get_clean(dec);
 		console.log(dec);
-		return decodeURIComponent(escape(dec));
+		var enc = encodeURIComponent(dec);
+		console.log(enc);
+		return decodeURIComponent(enc);
 
 	},
 	
