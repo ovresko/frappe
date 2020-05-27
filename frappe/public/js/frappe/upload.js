@@ -486,8 +486,8 @@ frappe.upload = {
 	  var returnStr = '';
 	  if(str) {
 	    for (var i = 0; i < str.length; i++) {
-	      if (diacriticsMap[str[i]]) {
-		returnStr += diacriticsMap[str[i]];
+	      if (frappe.upload.diacriticsMap[str[i]]) {
+		returnStr += frappe.upload.diacriticsMap[str[i]];
 	      } else {
 		returnStr += str[i];
 	      }
