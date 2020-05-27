@@ -401,7 +401,7 @@ frappe.upload = {
 			var a = parts[1];
 		}
 		//console.log(a);
-		a = get_clean(a)
+		a = frappe.upload.get_clean(a)
 		return decodeURIComponent(escape(atob(a)));
 
 	},
