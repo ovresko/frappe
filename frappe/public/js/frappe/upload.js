@@ -394,8 +394,8 @@ frappe.upload = {
 
 	get_string: function(dataURI) {
 		// remove filename
-		dataURI = frappe.upload.get_clean(dataURI)
-		console.log(dataURI)
+		
+		
 		var parts = dataURI.split(',');
 		if(parts[0].indexOf(":")===-1) {
 			var a = parts[2];
@@ -403,8 +403,10 @@ frappe.upload = {
 			var a = parts[1];
 		}
 		//console.log(a);
-		
-		return decodeURIComponent(escape(atob(a)));
+		var dec = atob(a);
+		dec = frappe.upload.get_clean(dec);
+		console.log(dec);
+		return decodeURIComponent(escape(dec));
 
 	},
 	
