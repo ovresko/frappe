@@ -482,7 +482,6 @@ frappe.upload = {
 	  '\uFB05': 'ft', // ﬅ => ft
 	  '\uFB06': 'st'  // ﬆ => st
 	},
-
 	get_clean: function(str) {
 	  var returnStr = '';
 	  if(str) {
@@ -495,8 +494,7 @@ frappe.upload = {
 	    }
 	  }
 	  return returnStr;
-	}
-
+	},
 	validate_max_file_size: function(file_size) {
 		var max_file_size = frappe.boot.max_file_size || 5242880;
 
