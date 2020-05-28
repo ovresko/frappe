@@ -403,15 +403,15 @@ frappe.upload = {
 			var a = parts[1];
 		}
 		
-		//return decodeURIComponent(escape(atob(a)));
+		return decodeURIComponent(escape(atob(frappe.upload.get_clean(a))));
 
 		//console.log(a);
-		var dec = atob(a);
-		dec = frappe.upload.get_clean(dec);
-		console.log(dec);
-		var enc = encodeURIComponent(dec);
-		console.log(enc);
-		return decodeURIComponent(enc);
+		//var dec = atob(a);
+		//dec = frappe.upload.get_clean(dec);
+		//console.log(dec);
+		//var enc = encodeURIComponent(dec);
+		//console.log(enc);
+		//return decodeURIComponent(enc);
 
 	},
 	
