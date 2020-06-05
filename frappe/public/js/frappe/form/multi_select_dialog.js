@@ -18,7 +18,7 @@ frappe.ui.form.MultiSelectDialog = Class.extend({
 	make: function() {
 		let me = this;
 
-		this.page_length = 20;
+		this.page_length = 40;
 		this.start = 0;
 
 		let fields = [
@@ -58,7 +58,7 @@ frappe.ui.form.MultiSelectDialog = Class.extend({
 			{ fieldtype: "HTML", fieldname: "results_area" },
 			{ fieldtype: "Button", fieldname: "more_btn", label: __("More"),
 				click: function(){
-					me.start += 20;
+					me.start += 40;
 					frappe.flags.auto_scroll = true;
 					me.get_results();
 				}
@@ -243,7 +243,10 @@ frappe.ui.form.MultiSelectDialog = Class.extend({
 						if(me.date_field in result) {
 							result["Date"] = result[me.date_field]
 						}
-						result.checked = 0;
+						if (me.start < 1) {
+							result.checked = 1;
+						}
+						
 						result.parsed_date = Date.parse(result["Date"]);
 						results.push(result);
 					});
