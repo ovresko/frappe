@@ -228,7 +228,7 @@ frappe.ui.form.MultiSelectDialog = Class.extend({
 						if(me.date_field in result) {
 							result["Date"] = result[me.date_field]
 						}
-						result.checked = 0;
+						result.checked = 1;
 						result.parsed_date = Date.parse(result["Date"]);
 						results.push(result);
 					});
@@ -241,7 +241,7 @@ frappe.ui.form.MultiSelectDialog = Class.extend({
 					});
 
 					// Preselect oldest entry
-					results[0].checked = 1
+					//results[0].checked = 1
 				}
 				me.render_result_list(results, more);
 			}
