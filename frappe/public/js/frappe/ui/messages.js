@@ -193,11 +193,11 @@ frappe.hide_msgprint = function(instant) {
 	}
 	if(msg_dialog && msg_dialog.$wrapper.is(":visible")) {
 		if(instant) {
-			msg_dialog.$wrapper.removeClass("fade");
+			//msg_dialog.$wrapper.removeClass("fade");
 		}
 		msg_dialog.hide();
 		if(instant) {
-			msg_dialog.$wrapper.addClass("fade");
+			//msg_dialog.$wrapper.addClass("fade");
 		}
 	}
 }
@@ -247,7 +247,7 @@ frappe.show_progress = function(title, count, total=100, description) {
 		</div`).appendTo(dialog.body);
 		dialog.progress_bar = dialog.progress.css({"margin-top": "10px"})
 			.find(".progress-bar");
-		dialog.$wrapper.removeClass("fade");
+		//dialog.$wrapper.removeClass("fade");
 		dialog.show();
 		frappe.cur_progress = dialog;
 	}
