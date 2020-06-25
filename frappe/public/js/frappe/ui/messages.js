@@ -186,6 +186,7 @@ frappe.msgprint = function(msg, title) {
 window.msgprint = frappe.msgprint;
 
 frappe.hide_msgprint = function(instant) {
+	console.log("hide");
 	// clear msgprint
 	if(msg_dialog && msg_dialog.msg_area) {
 		msg_dialog.msg_area.empty();
