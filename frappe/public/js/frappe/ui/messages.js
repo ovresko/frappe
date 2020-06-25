@@ -177,6 +177,7 @@ frappe.msgprint = function(msg, title) {
 
 	// make msgprint always appear on top
 	msg_dialog.$wrapper.css("z-index", 2000);
+	console.log("show",msg_dialog);
 	msg_dialog.show();
 
 	return msg_dialog;
